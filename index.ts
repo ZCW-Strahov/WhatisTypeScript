@@ -12,6 +12,10 @@ form.onsubmit = () => {
   console.log(text);
   const apiURL: string = "https://api.dictionaryapi.dev/api/v2/entries/en/" + text;
   console.log(apiURL);
-  return false; // prevent reload
-}
 
+  fetch(apiURL)
+  .then(response => console.log(response.json()))
+  .catch(error => console.log(error));
+
+  return false; // prevent reload
+} 
