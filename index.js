@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     recognition.continuous = false; // We want to process speech once the button is clicked
 
 
-    //this method will get transcript of voice and put it in the function of factch api
+    //this method will get transcript of voice and put it in the function of fetch api
     recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
         const word = transcript.trim().toLowerCase(); // Prepare the word for the API call
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
 
-    //event when buttun is clicked
+    //event when button is clicked
     startBtn.addEventListener('click', function(event) {
         event.preventDefault(); // Prevent any default button click behavior
         recognition.start(); // Start listening to speech
@@ -34,6 +34,26 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => displayError("Error fetching data. Please try again later."));
     }
 //a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function displayResults(data) {
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
