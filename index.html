@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dictionary App</title>
@@ -10,38 +10,38 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #4a4a4a; 
-            color: #fff; 
-            font-family: 'Montserrat', sans-serif; 
+            background-color: #4a4a4a;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
         }
         .cover-container {
             max-width: 42em;
         }
         .cover-heading {
-            font-family: 'Montserrat', sans-serif; 
+            font-family: 'Montserrat', sans-serif;
         }
         .cover-content {
             padding-top: 1rem;
         }
         .form-control {
-            background-color: #ffffff; 
-            color: #fff; 
-            border-color: #444; 
+            background-color: #ffffff;
+            color: #fff;
+            border-color: #444;
         }
         .btn {
-            background-color: #e94242; 
-            color: #fff; 
+            background-color: #e94242;
+            color: #fff;
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-family: 'Montserrat', sans-serif; 
+            font-family: 'Montserrat', sans-serif;
         }
         .btn:hover {
             background-color: #eb5858;
         }
         .result-container {
-            background-color: #595959; 
+            background-color: #595959;
             border-radius: 1rem;
             padding: 1rem;
             margin-top: 1rem;
@@ -50,7 +50,7 @@
             text-align: center;
             font-size: 0.8rem;
             margin-top: 2rem;
-            font-family: 'Montserrat', sans-serif; /
+            font-family: 'Montserrat', sans-serif;
         }
         .book-icon {
             width: 60px;
@@ -71,8 +71,8 @@
             <div class="cover-content">
                 <p class="lead">Enter a word:</p>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="word" placeholder="Search...">
-                    <button class="btn" type="button" id="searchBtn">Define</button>
+                    <label for="word"></label><input type="text" class="form-control" id="word" placeholder="Search...">
+                    <button class="btn" type="button" id="startBtn">Start</button>
                 </div>
                 <div id="results" class="result-container"></div>
             </div>
@@ -83,86 +83,6 @@
         </footer>
     </div>
 
-    <script>
-        document.getElementById('searchBtn').addEventListener('click', function() {
-            const word = document.getElementById('word').value.trim().toLowerCase();
-            fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-                .then(response => response.json())
-                .then(data => {
-                    displayResults(data);
-                })
-                .catch(error => {
-                    displayError("Error. Please try again later.");
-                });
-        });
-
-        function displayResults(data) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            data.forEach(entry => {
-                const word = entry.word;
-                const meanings = entry.meanings;
-
-                const entryDiv = document.createElement('div');
-                entryDiv.classList.add('meaning');
-
-                const wordHeading = document.createElement('h2');
-                wordHeading.textContent = word;
-                wordHeading.classList.add('word');
-                entryDiv.appendChild(wordHeading);
-
-                meanings.forEach(meaning => {
-                    const partOfSpeech = meaning.partOfSpeech;
-                    const definitions = meaning.definitions;
-
-                    const partOfSpeechHeading = document.createElement('h3');
-                    partOfSpeechHeading.textContent = `${partOfSpeech}:`;
-                    entryDiv.appendChild(partOfSpeechHeading);
-
-                    definitions.forEach(definition => {
-                        const definitionPara = document.createElement('p');
-                        definitionPara.textContent = `${definition.definition}`;
-                        entryDiv.appendChild(definitionPara);
-
-                        if (definition.example) {
-                            const examplePara = document.createElement('p');
-                            examplePara.textContent = `Example: ${definition.example}`;
-                            examplePara.classList.add('italic');
-                            entryDiv.appendChild(examplePara);
-                        }
-                    });
-                });
-
-                resultsDiv.appendChild(entryDiv);
-
-                
-                const audioControls = document.createElement('div');
-                entry.phonetics.forEach(phonetic => {
-                    if (phonetic.audio) {
-                        const audio = document.createElement('audio');
-                        audio.controls = true;
-                        audio.classList.add('audio-controls');
-                        const source = document.createElement('source');
-                        source.src = phonetic.audio;
-                        source.type = 'audio/mpeg';
-                        audio.appendChild(source);
-                        audioControls.appendChild(audio);
-                    }
-                });
-                entryDiv.appendChild(audioControls);
-            });
-        }
-
-        function displayError(message) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            const errorPara = document.createElement('p');
-            errorPara.textContent = message;
-            errorPara.classList.add('text-red-500');
-            resultsDiv.appendChild(errorPara);
-        }
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>

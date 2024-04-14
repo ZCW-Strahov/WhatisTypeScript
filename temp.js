@@ -34,6 +34,26 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => displayError("Error fetching data. Please try again later."));
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     function displayResults(data) {
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
