@@ -6,6 +6,44 @@ function fetchDefinition() {
         return;
     }
 
+//a
+    function displayResults(data) {
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        data.forEach(entry => {
+            const word = entry.word;
+            const phonetics = entry.phonetics;
+            const meanings = entry.meanings;
+
+            const entryDiv = document.createElement('div');
+            entryDiv.classList.add('meaning');
+
+            const wordHeading = document.createElement('h2');
+            wordHeading.textContent = word;
+            wordHeading.classList.add('text-2xl', 'font-bold', 'mb-2');
+            entryDiv.appendChild(wordHeading);
+
+
+
+            phonetics.forEach(phonetic => {
+                if (phonetic.text) {
+                    const phoneticSpan = document.createElement('span');
+                    phoneticSpan.textContent = ` [${phonetic.text}]`;
+                    entryDiv.appendChild(phoneticSpan);
+
+                    if (phonetic.audio) {
+                        const audio = document.createElement('audio');
+                        audio.setAttribute('controls', '');
+                        audio.classList.add('audio-controls');
+                        const source = document.createElement('source');
+                        source.setAttribute('src', phonetic.audio);
+                        source.setAttribute('type', 'audio/mpeg');
+                        audio.appendChild(source);
+                        entryDiv.appendChild(audio);
+                    }
+
+
     const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
     fetch(apiUrl)
         .then(response => response.json())
@@ -48,6 +86,7 @@ function displayResults(data) {
                     source.setAttribute('type', 'audio/mpeg');
                     audio.appendChild(source);
                     entryDiv.appendChild(audio);
+
                 }
             }
         });
