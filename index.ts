@@ -1,6 +1,3 @@
-// Import stylesheets
-//import './style.css';
-
 interface Phonetic {
   text: string;
   audio?: string;
@@ -9,8 +6,6 @@ interface Phonetic {
 interface Definition {
   definition: string;
   example?: string;
-  synonyms: string[];
-  antonyms: string[];
 }
 
 interface Meaning {
@@ -18,56 +13,68 @@ interface Meaning {
   definitions: Definition[];
 }
 
-interface DictionaryEntry {
+interface Entry {
   word: string;
   phonetics: Phonetic[];
+  origin?: string;
   meanings: Meaning[];
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const searchButton = document.getElementById('searchBtn') as HTMLButtonElement;
+function fetchDefinition(): void {
   const wordInput = document.getElementById('wordInput') as HTMLInputElement;
-  const resultContainer = document.getElementById('result') as HTMLElement;
+  const word = wordInput.value.trim().toLowerCase();
+  if (!word) {
+      displayError('Please enter a word.');
+      return;
+  }
 
-  searchButton.addEventListener('click', async () => {
-      const word = wordInput.value.trim();
+  const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+  fetch(apiUrl)
+      .then(response => response.json())
+      .then((entries: Entry[]) => displayResults(entries))
+      .catch(err => {
+          console.error('Fetch error:', err);
+          displayError("Failed to fetch definition. Please try again.");
+      });
+}
 
-      if (!word) {
-          resultContainer.innerHTML = `<p class="text-red-500">Please enter a word to look up.</p>`;
-          return;
-      }
+function displayResults(entries: Entry[]): void {
+  const container = document.getElementById('resultsContainer');
+  if (!container) return;
 
-      resultContainer.innerHTML = `<p>Loading...</p>`;
+  container.innerHTML = ''; // Clear previous results
 
-      try {
-          const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
-          const response = await fetch(apiUrl);
-          if (!response.ok) {
-              throw new Error('Failed to fetch definitions');
-          }
-          const entries: DictionaryEntry[] = await response.json();
-          displayDefinitions(entries, resultContainer);
-      } catch (error) {
-          console.error('Fetch error:', error);
-          resultContainer.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
-      }
-  });
-});
-
-function displayDefinitions(entries: DictionaryEntry[], container: HTMLElement): void {
-  container.innerHTML = ''; 
+  if (!entries.length) {
+      displayError('No definitions found.');
+      return;
+  }
 
   entries.forEach(entry => {
-      let htmlContent = `<div class="p-4 bg-gray-50 rounded-lg">
-          <h2 class="text-lg font-bold">${entry.word}</h2>
-          <p>Phonetic: ${entry.phonetics.map(p => p.text || '').join(', ')}</p>
-          <div>`;
+      const phoneticsText = entry.phonetics.map(ph => ph.text).join(', ');
+      const phoneticsAudio = entry.phonetics.filter(ph => ph.audio).map(ph => `<audio controls src="${ph.audio}"></audio>`).join(' ');
+
+      let htmlContent = `<div class="mb-6">
+          <h2 class="text-lg font-semibold">${entry.word} [${phoneticsText}]</h2>
+          ${phoneticsAudio}
+          <p><em>Origin:</em> ${entry.origin || 'No origin information available.'}</p>
+      `;
 
       entry.meanings.forEach(meaning => {
-          htmlContent += `<p><strong>${meaning.partOfSpeech}:</strong> ${meaning.definitions.map(d => d.definition).join(', ')}</p>`;
+          htmlContent += `<div class="mt-4">
+              <h3 class="font-bold">${meaning.partOfSpeech}</h3>
+              ${meaning.definitions.map(def => `<p><strong>Definition:</strong> ${def.definition}<br>
+              <strong>Example:</strong> ${def.example || 'No example available.'}</p>`).join('')}
+          </div>`;
       });
 
-      htmlContent += `</div></div>`;
+      htmlContent += '</div>';
       container.innerHTML += htmlContent;
   });
+}
+
+function displayError(message: string): void {
+  const container = document.getElementById('resultsContainer');
+  if (container) {
+      container.innerHTML = `<p class="text-red-500">${message}</p>`;
+  }
 }
