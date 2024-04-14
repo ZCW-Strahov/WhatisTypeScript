@@ -2,22 +2,22 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "baseUrl": "./",  // This sets the base directory for relative paths
-    "outDir": "./dist",  // Redirect output structure to the 'dist' folder
-    "rootDir": "./src",  // Specify the root folder of TypeScript files
-    "paths": {  // Setup aliases for imports
-      "@models/*": ["src/models/*"],  // Redirects '@models' to 'src/models'
-      "@components/*": ["src/components/*"],  // Redirects '@components' to 'src/components'
-      "@utils/*": ["src/utils/*"]  // Redirects '@utils' to 'src/utils'
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@models/*": ["src/models/*"],
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "esModuleInterop": true,
     "strict": true
   },
   "include": [
-    "/Users/danny/Projects/WhatisTypeScriptV2/index.ts"  // Only files under the 'src' directory are included for compilation
+    "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules" // Exclude 'node_modules' directory
+    "node_modules",
+    "**/*.test.ts"
   ]
 }
-
