@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dictionary App</title>
 
+
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        
         body {
-            background-color: #4a4a4a;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
+  background-image: url(https://img.freepik.com/free-photo/photorealistic-galaxy-background_23-2151064389.jpg?t=st=1713129892~exp=1713133492~hmac=ba498837f3f10af4b3bbc300dd2cff4f31393d3d3bf4a87bb25fb97b0267dbca&w=1480);
+}
+        body {
+            background-color: #4a4a4a; 
+            color: #fff; 
+            font-family: 'Montserrat', sans-serif; 
         }
         .cover-container {
             max-width: 42em;
         }
         .cover-heading {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', sans-serif; 
         }
         .cover-content {
             padding-top: 1rem;
         }
         .form-control {
-            background-color: #ffffff;
-            color: #fff;
-            border-color: #444;
+            background-color: #ffffff; 
+            color: #fff; 
+            border-color: #444; 
         }
         .btn {
-            background-color: #e94242;
-            color: #fff;
+            background-color: #e94242; 
+            color: #fff; 
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', sans-serif; 
         }
         .btn:hover {
             background-color: #eb5858;
         }
         .result-container {
-            background-color: #595959;
+            background-color: #595959; 
             border-radius: 1rem;
             padding: 1rem;
             margin-top: 1rem;
@@ -50,7 +55,7 @@
             text-align: center;
             font-size: 0.8rem;
             margin-top: 2rem;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', sans-serif; /
         }
         .book-icon {
             width: 60px;
@@ -71,15 +76,15 @@
             <div class="cover-content">
                 <p class="lead">Enter a word:</p>
                 <div class="input-group mb-3">
-                    <label for="word"></label><input type="text" class="form-control" id="word" placeholder="Search...">
-                    <button class="btn" type="button" id="startBtn">Start</button>
+                    <input type="text" class="form-control" id="word" placeholder="Search...">
+                    <button class="btn" type="button" id="startBtn">Define</button>
                 </div>
                 <div id="results" class="result-container"></div>
             </div>
         </main>
 
         <footer class="mt-auto text-center">
-            <p>by ZCW-Strahov 2024</p>
+            <p><a href="https://github.com/ZCW-Strahov/WhatisTypeScriptV2/blob/main/README.md" target="_blank" style="color: rgb(5, 5, 5); text-decoration: none;">by ZCW-Strahov 2024</a></p>
         </footer>
     </div>
 
