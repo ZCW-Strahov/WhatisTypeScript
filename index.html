@@ -77,7 +77,7 @@
                 <p class="lead">Enter a word:</p>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="word" placeholder="Search...">
-                    <button class="btn" type="button" id="searchBtn">Define</button>
+                    <button class="btn" type="button" id="startBtn">Define</button>
                 </div>
                 <div id="results" class="result-container"></div>
             </div>
@@ -88,86 +88,6 @@
         </footer>
     </div>
 
-    <script>
-        document.getElementById('searchBtn').addEventListener('click', function() {
-            const word = document.getElementById('word').value.trim().toLowerCase();
-            fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-                .then(response => response.json())
-                .then(data => {
-                    displayResults(data);
-                })
-                .catch(error => {
-                    displayError("Error. Please try again later.");
-                });
-        });
-
-        function displayResults(data) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            data.forEach(entry => {
-                const word = entry.word;
-                const meanings = entry.meanings;
-
-                const entryDiv = document.createElement('div');
-                entryDiv.classList.add('meaning');
-
-                const wordHeading = document.createElement('h2');
-                wordHeading.textContent = word;
-                wordHeading.classList.add('word');
-                entryDiv.appendChild(wordHeading);
-
-                meanings.forEach(meaning => {
-                    const partOfSpeech = meaning.partOfSpeech;
-                    const definitions = meaning.definitions;
-
-                    const partOfSpeechHeading = document.createElement('h3');
-                    partOfSpeechHeading.textContent = `${partOfSpeech}:`;
-                    entryDiv.appendChild(partOfSpeechHeading);
-
-                    definitions.forEach(definition => {
-                        const definitionPara = document.createElement('p');
-                        definitionPara.textContent = `${definition.definition}`;
-                        entryDiv.appendChild(definitionPara);
-
-                        if (definition.example) {
-                            const examplePara = document.createElement('p');
-                            examplePara.textContent = `Example: ${definition.example}`;
-                            examplePara.classList.add('italic');
-                            entryDiv.appendChild(examplePara);
-                        }
-                    });
-                });
-
-                resultsDiv.appendChild(entryDiv);
-
-                
-                const audioControls = document.createElement('div');
-                entry.phonetics.forEach(phonetic => {
-                    if (phonetic.audio) {
-                        const audio = document.createElement('audio');
-                        audio.controls = true;
-                        audio.classList.add('audio-controls');
-                        const source = document.createElement('source');
-                        source.src = phonetic.audio;
-                        source.type = 'audio/mpeg';
-                        audio.appendChild(source);
-                        audioControls.appendChild(audio);
-                    }
-                });
-                entryDiv.appendChild(audioControls);
-            });
-        }
-
-        function displayError(message) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            const errorPara = document.createElement('p');
-            errorPara.textContent = message;
-            errorPara.classList.add('text-red-500');
-            resultsDiv.appendChild(errorPara);
-        }
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
