@@ -75,7 +75,7 @@ function displayResults(data) {
                 }
             });
         });
-
+        
         resultsDiv.appendChild(entryDiv);
     });
 }
