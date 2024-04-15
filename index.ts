@@ -42,7 +42,7 @@ function displayResults(entries: Entry[]): void {
   const container = document.getElementById('resultsContainer');
   if (!container) return;
 
-  container.innerHTML = ''; 
+  container.innerHTML = '';
 
   if (!entries.length) {
       displayError('No definitions found.');

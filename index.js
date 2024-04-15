@@ -33,9 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => displayResults(data))
             .catch(error => displayError("Error fetching data. Please try again later."));
     }
-//a
-
-
 
 
 
